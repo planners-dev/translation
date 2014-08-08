@@ -1,6 +1,6 @@
 {
     "name": "Bartjuh4/translation",
-    "version":  "1.0",
+    "version":  "1.0.2",
     "description": "A Translation package for Laravel 4 with database and cache support",
     "license": "MIT",
     "authors": [
