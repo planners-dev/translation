@@ -1,8 +1,11 @@
 <?php namespace Waavi\Translation\Models;
 
 use Waavi\Model\WaaviModel;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Language extends WaaviModel {
+
+	use SoftDeletingTrait;
 
   /**
    *  Table name in the database.
