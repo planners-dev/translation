@@ -1,23 +1,14 @@
 <?php namespace Waavi\Translation\Models;
 
 use Waavi\Model\WaaviModel;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Language extends WaaviModel {
-
-	use SoftDeletingTrait;
 
   /**
    *  Table name in the database.
    *  @var string
    */
 	protected $table = 'languages';
-
-  /**
-   *  Allow for languages soft delete.
-   *  @var boolean
-   */
-  protected $softDelete = true;
 
   /**
    *  List of variables that cannot be mass assigned
