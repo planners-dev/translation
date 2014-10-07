@@ -1,4 +1,6 @@
-<?php namespace Waavi\Translation\Loaders;
+<?php
+
+namespace Waavi\Translation\Loaders;
 
 use Illuminate\Translation\LoaderInterface;
 use Illuminate\Translation\FileLoader as LaravelFileLoader;
@@ -15,17 +17,20 @@ class FileLoader extends Loader implements LoaderInterface {
 	 */
 	protected $laravelFileLoader;
 
+	protected $app;
+	
 	/**
 	 * 	Create a new mixed loader instance.
 	 *
 	 * 	@param  \Waavi\Lang\Providers\LanguageProvider  			$languageProvider
 	 * 	@param 	\Waavi\Lang\Providers\LanguageEntryProvider		$languageEntryProvider
-	 *	@param 	\Illuminate\Foundation\Application  					$app
+	 * 	@param 	\Illuminate\Foundation\Application  					$app
 	 */
 	public function __construct($languageProvider, $languageEntryProvider, $app)
 	{
+		$this->app = $app;
 		parent::__construct($languageProvider, $languageEntryProvider, $app);
-		$this->laravelFileLoader = new LaravelFileLoader($app['files'], $app['path'].DIRECTORY_SEPARATOR.'lang');
+		$this->laravelFileLoader = new LaravelFileLoader($app['files'], $app['path'] . DIRECTORY_SEPARATOR . 'lang');
 	}
 
 	/**
@@ -36,9 +41,12 @@ class FileLoader extends Loader implements LoaderInterface {
 	 * @param  string  $namespace
 	 * @return array
 	 */
-	public function loadRawLocale($locale, $group, $namespace = null)
+	public function loadRawLocale($locale, $group, $namespace = null, $dir = null)
 	{
-		$namespace = $namespace ?: '*';
+		if ($dir) {
+			$this->laravelFileLoader = new LaravelFileLoader($this->app['files'], $dir);
+		}
+		$namespace = $namespace ? : '*';
 		return $this->laravelFileLoader->load($locale, $group, $namespace);
 	}
 

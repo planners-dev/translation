@@ -47,7 +47,12 @@ class FileLoaderCommand extends Command {
 		foreach ($iter as $path => $dir) {
 			if ($dir->isDir()) {
 				if ($dir->getFilename() == 'lang') {
-					$this->path[] = $path;
+					$namespace = null;
+					$dept = $iter->getDepth();
+					if ($dept > 0) {
+						$namespace = $iter->getSubIterator($dept - 1)->getFilename();
+					}
+					$this->path[] = array('dir' => $path, 'namespace' => $namespace);
 				}
 			}
 		}
@@ -60,21 +65,22 @@ class FileLoaderCommand extends Command {
 	 */
 	public function fire()
 	{
-		foreach($this->path as $path) {
-		$localeDirs = $this->finder->directories($path);
-		foreach ($localeDirs as $localeDir) {
-			$locale = str_replace($path . DIRECTORY_SEPARATOR, '', $localeDir);
-			$language = $this->languageProvider->findByLocale($locale);
-			if ($language) {
-				$langFiles = $this->finder->files($localeDir);
-				foreach ($langFiles as $langFile) {
-					$group = str_replace(array('/', $localeDir . DIRECTORY_SEPARATOR, '.php'), array(DIRECTORY_SEPARATOR, '', ''), $langFile);
-					$lines = $this->fileLoader->loadRawLocale($locale, $group);
-					$this->languageEntryProvider->loadArray($lines, $language, $group, null, $locale == $this->fileLoader->getDefaultLocale());
+		foreach ($this->path as $path) {
+			$localeDirs = $this->finder->directories($path['dir']);
+			foreach ($localeDirs as $localeDir) {
+				$locale = str_replace($path['dir'] . DIRECTORY_SEPARATOR, '', $localeDir);
+				$language = $this->languageProvider->findByLocale($locale);
+				if ($language) {
+					$langFiles = $this->finder->files($localeDir);
+					foreach ($langFiles as $langFile) {
+						$namespace = $path['namespace'];
+						$group = str_replace(array('/', $localeDir . DIRECTORY_SEPARATOR, '.php'), array(DIRECTORY_SEPARATOR, '', ''), $langFile);
+						$lines = $this->fileLoader->loadRawLocale($locale, $group, null, $path['dir']);
+						$this->languageEntryProvider->loadArray($lines, $language, $group, $namespace, $locale == $this->fileLoader->getDefaultLocale());
+					}
 				}
 			}
 		}
-	}
 	}
 
 }
