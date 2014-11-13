@@ -76,6 +76,10 @@ class FileLoaderCommand extends Command {
 						$namespace = $path['namespace'];
 						$group = str_replace(array('/', $localeDir . DIRECTORY_SEPARATOR, '.php'), array(DIRECTORY_SEPARATOR, '', ''), $langFile);
 						$lines = $this->fileLoader->loadRawLocale($locale, $group, null, $path['dir']);
+						if (!is_array($lines)) {
+							echo $locale . '-' . $group . ' - ' . $path['dir'] . ' is not an valid translation array';
+							continue;
+						}
 						$this->languageEntryProvider->loadArray($lines, $language, $group, $namespace, $locale == $this->fileLoader->getDefaultLocale());
 					}
 				}
