@@ -49,11 +49,11 @@ return array(
 	|
 	*/
 	'language'				=>	array(
-		'model' 	=>	'Planners\Translation\Models\Language',
+		'model' 	=>	'Waavi\Translation\Models\Language',
 	),
 
 	'language_entry'	=>	array(
-		'model' 	=>	'Planners\Translation\Models\LanguageEntry',
+		'model' 	=>	'Waavi\Translation\Models\LanguageEntry',
 	),
 
 );
