@@ -1,6 +1,6 @@
 {
     "name": "Planners/translation",
-    "version":  "2.0",
+    "version":  "1.0",
     "description": "A Translation package for Laravel 4 with database and cache support",
     "license": "MIT",
     "authors": [
