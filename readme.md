@@ -14,7 +14,7 @@ Edit composer.json:
 	"repositories": [
     {
       "type": "vcs",
-      "url":  "git@github.com:Planners/translation.git"
+      "url":  "git@github.com:planners-dev/translation.git"
     }
   ],
 
