@@ -1,9 +1,7 @@
 <?php
 namespace Planners\Translation\Models;
 
-use Planners\Model\PlannersModel;
-
-class Language extends PlannersModel
+class Language extends Eloquent
 {
 
     /**
