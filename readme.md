@@ -1,12 +1,10 @@
-## Upgrading Laravel's localization module
+# Moduł do lokalizacji
 
-Keeping a project's translations properly updated is cumbersome. Usually translators do not have access to the codebase, and even when they do it's hard to keep track of which translations are missing for each language or when updates to the original text require that translations be revised.
+Ten moduł różni się od standardowego tym, że słowniki przechowywane są w bazie danych. Moduł bazuje w całości na https://github.com/Bartjuh4/translation
 
-This package allows developers to leverage their database and cache to manage multilanguage sites, while still working on language files during development and benefiting from all the features Laravel's Translation bundle has, like pluralization or replacement.
+## Instalacja
 
-## Installation
-
-Edit composer.json:
+Edytujemy composer.json:
 
 	"require": {
 		"waavi/translation": "*"
@@ -14,25 +12,46 @@ Edit composer.json:
 	"repositories": [
     {
       "type": "vcs",
-      "url":  "git@github.com:Waavi/translation.git"
+      "url":  "git@github.com:planners-dev/translation.git"
     }
   ],
 
-In app/config/app.php, replace the following entry from the providers array:
+	composer clean-cache
+	composer update
+
+Jesli coś idzie "nie tak", upewniamy się, czy w pliku composer.json w repo modułu znajdują się wpisy:
+	
+    "name": "waavi/translation",
+    "replace": {
+        "Waavi/translation":"*"
+    },
+
+W app/config/app.php, zmieniamy poniższą linijkę:
 
 	'Illuminate\Translation\TranslationServiceProvider'
 
-with:
+na:
 
 	'Waavi\Translation\TranslationServiceProvider'
 
-Execute the database migrations:
+Uruchamiamy migrację bazy danych:
 
 	php artisan migrate --package=waavi/translation
 
-You may publish the package's configuration if you so choose:
+Generujemy plik konfiguracyjny:
 
 	php artisan config:publish waavi/translation
+
+Uwaga!!! Przed kolejnym krokiem w bazie danych w tabeli __languages__ musi znajdować się wpis o języku angielskim:
+
+	INSERT INTO `languages` (`id`, `locale`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1,	'en',	'english',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	NULL);
+
+Zaciągamy słowniki z plików do bazy danych:
+
+	php artisan translator:load
+
+# Reszta dokumentacji z oryginału
 
 ## Usage
 
