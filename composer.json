@@ -19,7 +19,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com/arsonx/model.git"
+            "url": "git@github.com:arsonx/model.git"
         }
     ],    
     "autoload": {
