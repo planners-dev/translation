@@ -1,6 +1,5 @@
 {
     "name": "waavi/translation",
-    "version":  "1.0.3.4",
     "description": "A Translation package for Laravel 4 with database and cache support",
     "license": "MIT",
     "replace": {
@@ -14,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "waavi/model": "*"
+        "arsonx/model": "1.0"
     },
     "repositories": [
         {
