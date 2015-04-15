@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "waavi/model": "1.0"
+        "waavi/model": "*"
     },
     "repositories": [
         {
